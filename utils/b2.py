@@ -2,7 +2,6 @@ import mimetypes
 
 import pandas as pd
 import boto3
-from botocore.exceptions import ClientError
 from botocore.config import Config
 
 

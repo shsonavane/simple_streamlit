@@ -49,8 +49,12 @@ def plot_sentiment(df_sentiment, benchmarks):
 
 
 def get_sentence_sentiment(text, analyzer):
-    df_ = pd.DataFrame(re.split('[?.!]', text)[:-1], 
-                   columns=['text'])
+    sentences = re.split('[?.!]', text)
+    sentences = [s for s in sentences if s != '']
+
+    df_ = pd.DataFrame(sentences, 
+                       columns=['text'])
+    
     df_sentiment = get_sentiment_data(df_, 
                                     text_col='text', 
                                     analyzer=analyzer)

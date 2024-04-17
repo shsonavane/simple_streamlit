@@ -21,10 +21,12 @@ This tutorial assumes the following:
 1. Create a new folder for your web app (give it an [appropriate](https://gravitydept.com/blog/devising-a-git-repository-naming-convention) name), and place it in your GitHub "projects" folder.
 2. Initiate a Git repository in this folder with `git init` in the command line (after navigating to that folder with `cd`). Then, [add it to your GitHub Desktop](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/adding-a-repository-from-your-local-computer-to-github-desktop). You'll want to use Git early and often to ensure that your changes are tracked, and you can always go back to (or compare with) a past version that works.
    - Note the contents of the .gitignore file. **Environment files (such as the .env file) should be strictly ignored.**
-3. Initialize a pip environment using the *environment.yml* file in this directory. For example, if you're using Ana/Miniconda, you'll use `conda env create -f environment.yml`. 
-4. Any time you add new packages to the environment, **update the environment file**, and save an updated requirements file with `pip freeze > requirements.txt`. Choose one to add to your .gitignore file.
-   - **Note: all packages should be installed using pip.**
-   - Keep in mind, if you have both a "requirements.txt" file *and* an "environment.yml" file, [Streamlit will only use the .yml file](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/app-dependencies#other-python-package-managers). Pick one!
+3. Initialize a pip environment using the *env.yml* file in this directory. For example, if you're using Ana/Miniconda, you'll use `conda env create -f env.yml`.
+   - The use of "env.yml" instead of "environment.yml" is intentional. If you prefer to use "environment.yml", you may want to add the file to your .gitignore list (see below).
+4. Any time you add new packages to the environment, **update the .yml file**, and save an updated requirements file with `pip freeze > requirements.txt`.
+   - **All packages should be installed using pip.**
+
+**Note:** [Streamlit will only use \*one dependency file](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/app-dependencies#other-python-package-managers). If you have both a "requirements.txt" file *and* an "environment.yml" file in your repository, you will likely run into issues. The recommended option is to keep the *requirements.txt" file tracked on GitHub and the "environment.yml" file ignored (and unseen by Streamlit Cloud).
 
 ## Modularizing Code
 
