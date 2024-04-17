@@ -1,30 +1,53 @@
-import json
+import os
 import pickle
 
+import pandas as pd
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from dotenv import load_dotenv
+
 from utils.b2 import B2
-from sklearn.linear_model import LinearRegression
+from utils.modeling import *
+
+# ------------------------------------------------------
+#                DEFINE TRAINING FUNCTIONS
+# ------------------------------------------------------
+
+# N/A
 
 
-with open('./config_vars.json') as f:
-    config_vars = json.load(f)
+if __name__ == '__main__':
+    # ------------------------------------------------------
+    #                       LOAD DATA
+    # ------------------------------------------------------
+    # REMOTE_DATA = 'coffee_analysis.csv'
 
-b2 = B2(config_vars['B2_ENDPOINT'], 
-        config_vars['B2_KEYID'],
-        config_vars['B2_APPKEY'])
+    # load_dotenv()
 
-b2.set_bucket(config_vars['B2_BUCKETNAME'])
+    # # load Backblaze connection
+    # b2 = B2(endpoint=os.environ['B2_ENDPOINT'],
+    #         key_id=os.environ['B2_KEYID'],
+    #         secret_key=os.environ['B2_APPKEY'])
 
-data = b2.to_df('seattle_home_prices/SeattleHomePrices_2.csv')
-data = data.rename(columns={'LATITUDE': 'lat', 'LONGITUDE': 'lon'})
-clean_data = data.dropna(subset=['PRICE', 'SQUARE FEET', 'BEDS'])
+    # b2.set_bucket(os.environ['B2_BUCKETNAME'])
 
-X = clean_data[['SQUARE FEET', 'BEDS']]
-y = clean_data['PRICE']
+    # # df_coffee = pd.read_csv('./data/coffee_analysis.csv')
+    # df_coffee = b2.get_df(REMOTE_DATA)
 
-lm = LinearRegression()
+    # df_coffee.drop_duplicates(subset='desc_1', 
+    #                           inplace=True)
+    # df_coffee.dropna(subset=['desc_1', 
+    #                          'roast', 
+    #                          'loc_country'], 
+    #                  inplace=True)
 
-lm.fit(X, y)
+    # ------------------------------------------------------
+    #                    TRAIN/SAVE MODEL
+    # ------------------------------------------------------
 
-with open('model.pickle', 'wb') as f:
-    # Pickle the 'data' dictionary using the highest protocol available.
-    pickle.dump(lm, f, pickle.HIGHEST_PROTOCOL)
+    # Note: this is a simple model which doesn't require the data
+
+    # save this model
+    analyzer = SentimentIntensityAnalyzer()
+
+    with open('./model.pickle', 'wb') as f:
+        pickle.dump(analyzer, f)
