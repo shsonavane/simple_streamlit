@@ -1,14 +1,30 @@
-# iPython
-.ipynb*
-__pycache__*
-*.pyc
+# Jupyter Notebook
+**.ipynb_checkpoints
 
-# app
+# IPython
+profile_default/
+ipython_config.py
+
+# Python
+cython_debug/
+*__pycache__/
+*.py[cod]
+
+# data
+*.zip
+*.csv
+*.txt
+*.db
+*.graphml
+
+# scratch
+*scratch.ipynb
+
+# OSX
+**.DS_Store
+*.idea
+
+# project
 .env
-scratch.ipynb
-data*
 environment.yml
 # *.pickle
-
-# macOS
-*.DS_Store
