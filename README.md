@@ -18,6 +18,8 @@ This tutorial assumes the following:
 
 ## Project Setup
 
+> Use [this data](https://www.kaggle.com/datasets/schmoyote/coffee-reviews-dataset/) (i.e., the coffee_analysis.csv file) to run the application. Refer to the *train_model.py* file for some preprocessing.
+
 1. Create a new folder for your web app (give it an [appropriate](https://gravitydept.com/blog/devising-a-git-repository-naming-convention) name), and place it in your GitHub "projects" folder.
 2. Initiate a Git repository in this folder with `git init` in the command line (after navigating to that folder with `cd`). Then, [add it to your GitHub Desktop](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/adding-a-repository-from-your-local-computer-to-github-desktop). You'll want to use Git early and often to ensure that your changes are tracked, and you can always go back to (or compare with) a past version that works.
    - Note the contents of the .gitignore file. **Environment files (such as the .env file) should be strictly ignored.**
@@ -29,6 +31,18 @@ This tutorial assumes the following:
 **Note:** [Streamlit will only use \*one dependency file](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/app-dependencies#other-python-package-managers). If you have both a "requirements.txt" file *and* an "environment.yml" file in your repository, you will likely run into issues. The recommended option is to keep the *requirements.txt" file tracked on GitHub and the "environment.yml" file ignored (and unseen by Streamlit Cloud).
 
 ## Modularizing Code
+
+#### Scratchwork
+
+Consider creating a *scratch.ipynb* file for testing out code as you build your web app, and make sure to add it to your *.gitignore* file.
+
+In JupyterLab (in the latest version of 3.x), it's also helpful to install an ipython kernel into your environment for easy notebook kernel selection:
+
+1. Activate the environment with `conda activate <myenv>`.
+2. Run `python -m ipykernel install --user --name <myenv> --display-name "<myenv>"`. This step sets up access to this environment from Jupyter Lab.
+   - See [the docs](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) for more on ipykernel.
+
+#### Modules
 
 When you feel ready for it, consider dividing your code into separate Python files, saved in modular folders. For example, you'll notice in this repository, there is a *utils* folder. In that folder, we have a few Python files with code tested out in Jupyter first. Once it was determined the code worked in Jupyter, it was transferred into the separate Python file as functions or Python [classes](https://www.w3schools.com/python/python_classes.asp).
 
