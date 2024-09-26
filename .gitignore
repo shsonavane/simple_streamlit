@@ -22,7 +22,7 @@ cython_debug/
 *scratch.ipynb
 # *.ipynb
 
-# OSX
+# OS
 **.DS_Store
 *.idea
 
