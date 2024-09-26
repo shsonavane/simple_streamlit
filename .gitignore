@@ -16,9 +16,11 @@ cython_debug/
 *.txt
 *.db
 *.graphml
+# *.pickle
 
-# scratch
+# notebooks
 *scratch.ipynb
+# *.ipynb
 
 # OSX
 **.DS_Store
@@ -27,4 +29,3 @@ cython_debug/
 # project
 .env
 environment.yml
-# *.pickle
