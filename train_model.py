@@ -44,7 +44,7 @@ if __name__ == '__main__':
     #                    TRAIN/SAVE MODEL
     # ------------------------------------------------------
 
-    # Note: this is a simple model which doesn't require the data
+    # Note: this is a simple model which doesn't require data to train
 
     # save this model
     analyzer = SentimentIntensityAnalyzer()
