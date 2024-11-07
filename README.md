@@ -70,9 +70,10 @@ In short, a decorator function adjusts its companion function by "wrapping" it i
 
 Sign up for the [Backblaze B2 Cloud Storage](https://www.backblaze.com/b2/cloud-storage.html) service. At the time of writing this, the first 10GB are free! For more information on Backblaze, check out their [documentation](https://www.backblaze.com/docs/cloud-storage-python-developer-quick-start-guide).
 
-1. Set up at least one storage bucket for your project, and at least one app key. It's recommended that you get into the habit of keeping your bucket *private*.
+1. [Create at least one storage bucket](https://www.backblaze.com/docs/cloud-storage-create-and-manage-buckets#create-a-bucket) for your project, and at least one separate [application key](https://www.backblaze.com/docs/cloud-storage-create-and-manage-app-keys#create-an-app-key). It's recommended that you get into the habit of keeping your bucket *private*.
+   - Your Application Key is **different** from the "Master" app key. You can set it to Read and Write to the storage bucket you created.
    - You can set the "Default Encryption" to be "Disabled". Enabling this just adds another level of protection which you can experiment with *if you like*. Since this also adds a level of complexity and room for error, this tutorial assumes this is "Disabled."
-   - When shown an app key or bucket key, make sure to save it in some file locally somewhere!
+   - When shown your app key, make sure to save it in some file locally somewhere! You'll only be shown it once.
 2. This package includes a few Backblaze helper functions in the *utils/b2.py* file.
    - For more information on these functions, take a look at the [Backblaze b2sdk documentation](https://b2-sdk-python.readthedocs.io/en/master/index.html) (this is the Python package driving the [Backblaze Native API](https://www.backblaze.com/apidocs/introduction-to-the-b2-native-api)).
 
