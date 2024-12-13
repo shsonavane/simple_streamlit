@@ -13,16 +13,24 @@ from utils.modeling import *
 # ------------------------------------------------------
 REMOTE_DATA = 'coffee_analysis_w_sentiment.csv'
 
-
 # ------------------------------------------------------
 #                        CONFIG
 # ------------------------------------------------------
 load_dotenv()
 
-# load Backblaze connection
-b2 = B2(endpoint=os.environ['B2_ENDPOINT'],
-        key_id=os.environ['B2_KEYID'],
-        secret_key=os.environ['B2_APPKEY'])
+# check whether app is being run locally or on the cloud
+# with this, we only need to update the local .env file
+try:
+    LOCAL = os.environ['LOCAL'] == "Yes"
+except KeyError:
+    LOCAL = False
+
+if not LOCAL:
+    # only load Backblaze data on Streamlit cloud
+    # save on data transactions during local development
+    b2 = B2(endpoint=os.environ['B2_ENDPOINT'],
+            key_id=os.environ['B2_KEYID'],
+            secret_key=os.environ['B2_APPKEY'])
 
 
 # ------------------------------------------------------
@@ -30,9 +38,13 @@ b2 = B2(endpoint=os.environ['B2_ENDPOINT'],
 # ------------------------------------------------------
 @st.cache_data
 def get_data():
-    # collect data frame of reviews and their sentiment
-    b2.set_bucket(os.environ['B2_BUCKETNAME'])
-    df_coffee = b2.get_df(REMOTE_DATA)
+    if LOCAL:
+        # collect data from local data folder
+        df_coffee = pd.read_csv('./data/' + REMOTE_DATA)
+    else:
+        # collect data frame of reviews and their sentiment
+        b2.set_bucket(os.environ['B2_BUCKETNAME'])
+        df_coffee = b2.get_df(REMOTE_DATA)
 
     # average sentiment scores for the whole dataset
     benchmarks = df_coffee[['neg', 'neu', 'pos', 'compound']] \
