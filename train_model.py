@@ -5,6 +5,7 @@ from utils.modeling import *
 
 
 def get_coffee_data():
+    # this is just the original data from Kaggle
     df_coffee = pd.read_csv("https://raw.githubusercontent.com/leontoddjohnson/datasets/refs/heads/main/data/coffee_analysis.csv")
 
     df_coffee.drop_duplicates(subset='desc_1', 
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     # ------------------------------------------------------
     df_sentiment = get_sentiment_data(df_coffee, 'desc_1', analyzer)
 
-    # ignored by git, but uplaoded to Google Sheets
+    # ignored by git, but uploaded to Google Sheets
     df_sentiment.to_csv('./coffee_analysis.csv', index=False)
 
     
