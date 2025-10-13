@@ -1,64 +1,47 @@
-import os
 import pickle
 
 import streamlit as st
-from dotenv import load_dotenv
+from streamlit_gsheets import GSheetsConnection
 
-from utils.b2 import B2
+from utils.preprocessing import *
 from utils.modeling import *
 
 
 # ------------------------------------------------------
 #                      APP CONSTANTS
 # ------------------------------------------------------
-REMOTE_DATA = 'coffee_analysis_w_sentiment.csv'
+MODELPATH = './model.pickle'
 
 # ------------------------------------------------------
-#                        CONFIG
+#                  CACHE DATA AND MODEL
+# these two functions could also be in a separate module
 # ------------------------------------------------------
-load_dotenv()
+@st.cache_resource
+def get_model():
+    with open(MODELPATH, 'rb') as f:
+        analyzer = pickle.load(f)
+    
+    return analyzer
 
-# check whether app is being run locally or on the cloud
-# with this, we only need to update the local .env file
-try:
-    LOCAL = os.environ['LOCAL'] == "Yes"
-except KeyError:
-    LOCAL = False
-
-if not LOCAL:
-    # only load Backblaze data on Streamlit cloud
-    # save on data transactions during local development
-    b2 = B2(endpoint=os.environ['B2_ENDPOINT'],
-            key_id=os.environ['B2_KEYID'],
-            secret_key=os.environ['B2_APPKEY'])
-
-
-# ------------------------------------------------------
-#                        CACHING
-# ------------------------------------------------------
 @st.cache_data
-def get_data():
-    if LOCAL:
-        # collect data from local data folder
-        df_coffee = pd.read_csv('./data/' + REMOTE_DATA)
-    else:
-        # collect data frame of reviews and their sentiment
-        b2.set_bucket(os.environ['B2_BUCKETNAME'])
-        df_coffee = b2.get_df(REMOTE_DATA)
-
+def get_benchmarks(df_coffee):
     # average sentiment scores for the whole dataset
     benchmarks = df_coffee[['neg', 'neu', 'pos', 'compound']] \
                     .agg(['mean', 'median'])
     
-    return df_coffee, benchmarks
+    return benchmarks
 
+# Create a connection object.
+conn = st.connection("gsheets", type=GSheetsConnection)
 
-@st.cache_resource
-def get_model():
-    with open('./model.pickle', 'rb') as f:
-        analyzer = pickle.load(f)
-    
-    return analyzer
+# Caches data ... setting ttl=0 will disable caching
+df_coffee = conn.read(ttl="5m")
+
+# define the sheet name if there are multiple tabs
+# df = conn.read(worksheet="Sheet1", ttl="5m")
+
+benchmarks = get_benchmarks(df_coffee)
+analyzer = get_model()
 
 # ------------------------------------------------------
 #                         APP
@@ -69,11 +52,8 @@ def get_model():
 st.write(
 '''
 # Review Sentiment Analysis
-We pull data from our Backblaze storage bucket, and render it in Streamlit.
+We pull data from Google Sheets, analyze it, and render analyses in Streamlit.
 ''')
-
-df_coffee, benchmarks = get_data()
-analyzer = get_model()
 
 # ------------------------------
 # PART 1 : Filter Data
@@ -84,6 +64,7 @@ roast = st.selectbox("Select a roast:",
 loc_country = st.selectbox("Select a roaster location:",
                      df_coffee['loc_country'].unique())
 
+# note that this function caches data returned based on repeated input
 df_filtered = filter_coffee(roast, loc_country, df_coffee)
 
 st.write(

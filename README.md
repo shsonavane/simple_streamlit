@@ -5,7 +5,7 @@ In this tutorial, we:
 1. Load a data frame of coffee reviews, clean the data, and prepare it for modeling.
 2. Use sentiment analysis on subsets of this data.
 3. Build a web app which uses this sentiment analysis tool, and test it out locally.
-4. Store data on Backblaze, and connect it to Streamlit.
+4. Store data on Google Sheets, and connect it to Streamlit.
 5. Host the web app online using Streamlit (and GitHub).
 
 ## Prerequisites
@@ -14,7 +14,7 @@ This tutorial assumes the following:
 
 - You have a GitHub account, and you're familiar with using git and .gitignore files.
 - You can build and manage a pip Python environment.
-- You are familiar with environment variables.
+- You are at least familiar with environment variables.
 
 ## Project Setup
 

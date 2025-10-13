@@ -1,53 +1,44 @@
-import os
 import pickle
-
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from dotenv import load_dotenv
-
-from utils.b2 import B2
 from utils.modeling import *
 
-# ------------------------------------------------------
-#                DEFINE TRAINING FUNCTIONS
-# ------------------------------------------------------
 
-# N/A
+def get_coffee_data():
+    df_coffee = pd.read_csv("https://raw.githubusercontent.com/leontoddjohnson/datasets/refs/heads/main/data/coffee_analysis.csv")
+
+    df_coffee.drop_duplicates(subset='desc_1', 
+                              inplace=True)
+
+    df_coffee.dropna(subset=['desc_1', 
+                            'roast', 
+                            'loc_country'], 
+                    inplace=True)
+    
+    return df_coffee
 
 
 if __name__ == '__main__':
     # ------------------------------------------------------
-    #                       LOAD DATA
+    #                       GET DATA
     # ------------------------------------------------------
-    # REMOTE_DATA = 'coffee_analysis.csv'
-
-    # load_dotenv()
-
-    # # load Backblaze connection
-    # b2 = B2(endpoint=os.environ['B2_ENDPOINT'],
-    #         key_id=os.environ['B2_KEYID'],
-    #         secret_key=os.environ['B2_APPKEY'])
-
-    # b2.set_bucket(os.environ['B2_BUCKETNAME'])
-
-    # # df_coffee = pd.read_csv('./data/coffee_analysis.csv')
-    # df_coffee = b2.get_df(REMOTE_DATA)
-
-    # df_coffee.drop_duplicates(subset='desc_1', 
-    #                           inplace=True)
-    # df_coffee.dropna(subset=['desc_1', 
-    #                          'roast', 
-    #                          'loc_country'], 
-    #                  inplace=True)
+    df_coffee = get_coffee_data()
 
     # ------------------------------------------------------
-    #                    TRAIN/SAVE MODEL
+    #                    "TRAIN" MODEL
     # ------------------------------------------------------
-
-    # Note: this is a simple model which doesn't require data to train
-
-    # save this model
     analyzer = SentimentIntensityAnalyzer()
 
+    # Note: this is a simple model which doesn't require data to train
     with open('./model.pickle', 'wb') as f:
         pickle.dump(analyzer, f)
+
+    # ------------------------------------------------------
+    #               CALCULATE SENTIMENT DATA
+    # ------------------------------------------------------
+    df_sentiment = get_sentiment_data(df_coffee, 'desc_1', analyzer)
+
+    # ignored by git, but uplaoded to Google Sheets
+    df_sentiment.to_csv('./coffee_analysis.csv', index=False)
+
+    
