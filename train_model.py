@@ -40,6 +40,6 @@ if __name__ == '__main__':
     df_sentiment = get_sentiment_data(df_coffee, 'desc_1', analyzer)
 
     # ignored by git, but uploaded to Google Sheets
-    df_sentiment.to_csv('./coffee_analysis.csv', index=False)
+    df_sentiment.to_csv('./data/coffee_analysis.csv', index=False)
 
     
