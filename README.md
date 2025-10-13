@@ -48,7 +48,7 @@ The raw data for this tutorial comes from [Kaggle](https://www.kaggle.com/datase
 
   - Select "Automatically republish when changes are made" (this may be in a dropdown menu in the popup).
 
-  4. Get the CSV link. It should look something like this:
+  - Get the CSV link. It should look something like this:
      
       `https://docs.google.com/spreadsheets/d/e/{spreadsheet_id}/pub?...output=csv`
 
@@ -57,6 +57,8 @@ The raw data for this tutorial comes from [Kaggle](https://www.kaggle.com/datase
 ### Sentiment Analysis
 
 The model for this web app did not require any data to "train". Instead, it just needs to be instantiated and saved as a model.pickle file. All this is done in the train_model.py file, namely because the model itself is used to prepare data for the web app (see the `df_sentiment` dataframe).
+
+Typically, models should also be saved in some cloud storage location, but for our purposes, saving the model to the GitHub repository is okay (especially because it is not very big).
 
 ## Streamlit
 
@@ -68,7 +70,7 @@ Code can be tested locally with `streamlit run app.py` (assuming your app file n
 
 #### Secrets
 
-We use the [secrets.toml](https://docs.streamlit.io/develop/api-reference/connections/secrets.toml) file to manage environment variables used in this web app. This allows us to manage environment variables (e.g., API keys, passwords, etc.) in the same way as we would normally, and it runs seamlessly with Streamlit.
+We use the [secrets.toml](https://docs.streamlit.io/develop/api-reference/connections/secrets.toml) file to manage environment variables used in this web app. This gives us a level of control over the security of API keys, passwords, etc., as environment variables.
 
 Once your environment variables are working locally, make sure you configure them accordingly on Streamlit Cloud using their [Secrets Management](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/secrets-management).
 
