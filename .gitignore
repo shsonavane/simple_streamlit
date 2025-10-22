@@ -11,9 +11,9 @@ cython_debug/
 *.py[cod]
 
 # data
+data
 *.zip
 *.csv
-*.txt
 *.db
 *.graphml
 # *.pickle
