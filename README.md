@@ -86,5 +86,5 @@ In short, a decorator function adjusts its companion function by "wrapping" it i
 
 - You may consider using [Google Colab](https://colab.research.google.com/) to train your model and mold your project. Feel free to [use this as a template](https://colab.research.google.com/drive/1kgr3zMrC4sgBZXCx0jgVwXAIPXJgUJn_?usp=sharing) (i.e., make a copy of that notebook if you like). 
 - Note that this app just uses the native Streamlit visualization functionality. For more flexibility on your visualization options, see [here](https://docs.streamlit.io/library/api-reference/charts).
-- [Render](https://render.com/) and [Railway](https://railway.app/) are alternatives for hosting more robust web apps, but their free tiers can be restricting. In these cases, it's best to just pay the monthly fee.
+- [Render](https://render.com/) and [Railway](https://railway.app/) are alternatives for hosting more robust web apps, but their setup can get complex. Also, their free tiers can be a bit restricting, so it's often best to just pay their monthly fee.
 - [Plotly Dash](https://dash.plotly.com/tutorial) is an alternative for building extensive interactive visualizations, dashboards, and more intriguing Python-based products. It requires a more robust app hosting resource like Render or Railway, and it does have a bit of a steeper learning curve.
