@@ -13,6 +13,14 @@ from utils.modeling import *
 # ------------------------------------------------------
 MODELPATH = './model.pickle'
 
+# ------------------------------------------------------
+# PAGE CONFIGURATION
+# ------------------------------------------------------
+st.set_page_config(
+    page_title="Coffee Sentiment Analyzer",
+    page_icon="☕",  # optional, you can remove or change this
+    layout="wide"    # makes better use of screen space
+)
 
 # ------------------------------------------------------
 #                  CACHE DATA AND MODEL
